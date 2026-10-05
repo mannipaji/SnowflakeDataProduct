@@ -1,0 +1,72 @@
+semantic_models:
+  - name: employee_data
+    description: Employee master data including location, contact, and department details.
+    model: ref('employee_data.sql')
+    defaults:
+      agg_time_dimension: employee_created_at
+
+    entities:
+      - name: employee
+        type: primary
+        expr: employee_id
+
+    dimensions:
+      - name: employee_id
+        type: categorical
+        description: Unique employee identifier.
+        expr: employee_id
+
+      - name: employee_name
+        type: categorical
+        description: Name of the employee.
+        expr: employee_name
+
+      - name: employee_location_country
+        type: categorical
+        description: Country where the employee is located.
+        expr: employee_location_country
+
+      - name: employee_location_state
+        type: categorical
+        description: State where the employee is located.
+        expr: employee_location_state
+
+      - name: employee_email
+        type: categorical
+        description: Email address of the employee.
+        expr: employee_email
+
+      - name: employee_phone
+        type: categorical
+        description: Phone number of the employee.
+        expr: employee_phone
+
+      - name: employee_created_at
+        type: time
+        description: Timestamp when the employee record was created.
+        expr: employee_created_at
+        type_params:
+          time_granularity: day
+
+      - name: employee_updated_at
+        type: time
+        description: Timestamp when the employee record was last updated.
+        expr: employee_updated_at
+        type_params:
+          time_granularity: day
+
+      - name: employee_department
+        type: categorical
+        description: Department of the employee.
+        expr: employee_department
+
+    measures:
+      - name: total_employees
+        description: Total number of unique employees.
+        agg: count_distinct
+        expr: employee_id
+
+      - name: total_employee_records
+        description: Total number of employee records.
+        agg: count
+        expr: employee_id

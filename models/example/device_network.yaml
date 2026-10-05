@@ -1,0 +1,158 @@
+semantic_models:
+  - name: device_network
+    description: Device network event data including connection, IP, WLAN, and link speed details.
+    model: ref('device_network.sql')
+    defaults:
+      agg_time_dimension: report_time
+
+    entities:
+      - name: device
+        type: primary
+        expr: device_id
+
+      - name: dataset_context
+        type: foreign
+        expr: dataset_context_id
+
+      - name: device_context
+        type: foreign
+        expr: device_context_id
+
+      - name: item_context
+        type: foreign
+        expr: item_context_id
+
+      - name: subscription
+        type: foreign
+        expr: subscription_id
+
+    dimensions:
+      - name: dataset_context_id
+        type: categorical
+        description: Dataset context identifier.
+        expr: dataset_context_id
+
+      - name: dataset_id
+        type: categorical
+        description: Dataset identifier.
+        expr: dataset_id
+
+      - name: device_context_id
+        type: categorical
+        description: Device context identifier.
+        expr: device_context_id
+
+      - name: device_id
+        type: categorical
+        description: Unique device identifier.
+        expr: device_id
+
+      - name: item_context_id
+        type: categorical
+        description: Item context identifier.
+        expr: item_context_id
+
+      - name: connectiontype
+        type: categorical
+        description: Type of network connection.
+        expr: connectiontype
+
+      - name: ipv4gateway
+        type: categorical
+        description: IPv4 gateway address.
+        expr: ipv4gateway
+
+      - name: ipv4address
+        type: categorical
+        description: IPv4 address.
+        expr: ipv4address
+
+      - name: ipv6gateway
+        type: categorical
+        description: IPv6 gateway address.
+        expr: ipv6gateway
+
+      - name: ipv6address
+        type: categorical
+        description: IPv6 address.
+        expr: ipv6address
+
+      - name: internetconnection
+        type: categorical
+        description: Internet connection status.
+        expr: internetconnection
+
+      - name: linkspeed
+        type: categorical
+        description: Network link speed (numeric, cleaned).
+        expr: linkspeed
+
+      - name: macaddress
+        type: categorical
+        description: MAC address of the network interface.
+        expr: macaddress
+
+      - name: wlansecurity
+        type: categorical
+        description: WLAN security type.
+        expr: wlansecurity
+
+      - name: wlanssid
+        type: categorical
+        description: WLAN SSID name.
+        expr: wlanssid
+
+      - name: item_id
+        type: categorical
+        description: Item identifier.
+        expr: item_id
+
+      - name: item_name
+        type: categorical
+        description: Item name.
+        expr: item_name
+
+      - name: item_time
+        type: time
+        description: Item timestamp.
+        expr: item_time
+        type_params:
+          time_granularity: day
+
+      - name: report_time
+        type: time
+        description: Report timestamp.
+        expr: report_time
+        type_params:
+          time_granularity: day
+
+      - name: schema_ver
+        type: categorical
+        description: Schema version.
+        expr: schema_ver
+
+      - name: subscription_id
+        type: categorical
+        description: Subscription identifier.
+        expr: subscription_id
+
+      - name: subscription_ids
+        type: categorical
+        description: Secondary subscription identifier.
+        expr: subscription_ids
+
+    measures:
+      - name: total_devices
+        description: Total number of unique devices.
+        agg: count_distinct
+        expr: device_id
+
+      - name: total_network_events
+        description: Total number of network event records.
+        agg: count
+        expr: device_id
+
+      - name: avg_linkspeed
+        description: Average network link speed.
+        agg: average
+        expr: linkspeed
