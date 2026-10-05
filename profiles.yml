@@ -1,0 +1,18 @@
+user:
+  outputs:
+    default:
+      account: SJMVZXH-ZQ80901
+      auth_type: password
+      client_session_keep_alive: false
+      connect_retries: 3
+      connect_timeout: 30
+      database: AGRIM
+      password: SrDataEng@2023
+      retry_on_database_errors: true
+      role: null
+      schema: dbt_msingh
+      threads: 6
+      type: snowflake
+      user: MANPREETSINGHSDE
+      warehouse: COMPUTE_WH
+  target: default
