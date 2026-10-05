@@ -1,15 +1,8 @@
-with device_data as (
-    select
-        CONTEXT_ID,
-        COUNTRY_CODE,
-        COUNTRY_NAME,
-        CUSTOMER_ID
-    from DEVICESUPPORT_AGENTICAI.DEVICE_DATA
-)
+with
+    device_data as (
+        select context_id, country_code, country_name, customer_id
+        from devicesupport_agenticai.device_data
+    )
 
-select
-    CONTEXT_ID,
-    COUNTRY_CODE,
-    COUNTRY_NAME,
-    CUSTOMER_ID
+select context_id, country_code, country_name, customer_id
 from device_data
