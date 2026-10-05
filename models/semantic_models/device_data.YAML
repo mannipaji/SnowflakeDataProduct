@@ -1,0 +1,33 @@
+semantic_models:
+  - name: device_data
+    description: Table containing information about devices
+    model: ref('device_data.sql')
+    defaults:
+      agg_time_dimension: load_datetime
+
+    dimensions:
+      - name: context_id
+        type: categorical
+        description: The context id of the device.
+        expr: context_id
+
+      - name: country_code
+        type: categorical
+        description: The country code.
+        expr: country_code
+
+      - name: country_name
+        type: categorical
+        description: The name of the country.
+        expr: country_name
+
+      - name: customer_id
+        type: categorical
+        description: The customer id.
+        expr: customer_id
+
+    measures:
+      - name: total_devices
+        description: Total number of unique devices.
+        agg: count_distinct
+        expr: context_id

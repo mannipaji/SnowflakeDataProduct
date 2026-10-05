@@ -1,0 +1,123 @@
+semantic_models:
+  - name: device_memory
+    description: Device memory event data including free and visible physical memory details.
+    model: ref('device_memory.sql')
+    defaults:
+      agg_time_dimension: report_time
+
+    entities:
+      - name: device
+        type: primary
+        expr: device_id
+
+      - name: dataset_context
+        type: foreign
+        expr: dataset_context_id
+
+      - name: device_context
+        type: foreign
+        expr: device_context_id
+
+      - name: item_context
+        type: foreign
+        expr: item_context_id
+
+      - name: subscription
+        type: foreign
+        expr: subscription_id
+
+    dimensions:
+      - name: dataset_context_id
+        type: categorical
+        description: Dataset context identifier.
+        expr: dataset_context_id
+
+      - name: dataset_id
+        type: categorical
+        description: Dataset identifier.
+        expr: dataset_id
+
+      - name: device_context_id
+        type: categorical
+        description: Device context identifier.
+        expr: device_context_id
+
+      - name: device_id
+        type: categorical
+        description: Unique device identifier.
+        expr: device_id
+
+      - name: item_context_id
+        type: categorical
+        description: Item context identifier.
+        expr: item_context_id
+
+      - name: freephysicalmemory
+        type: categorical
+        description: Free physical memory (numeric, cleaned).
+        expr: freephysicalmemory
+
+      - name: visiblememory
+        type: categorical
+        description: Visible physical memory (numeric, cleaned).
+        expr: visiblememory
+
+      - name: item_id
+        type: categorical
+        description: Item identifier.
+        expr: item_id
+
+      - name: item_name
+        type: categorical
+        description: Item name.
+        expr: item_name
+
+      - name: item_time
+        type: time
+        description: Item timestamp.
+        expr: item_time
+        type_params:
+          time_granularity: day
+
+      - name: report_time
+        type: time
+        description: Report timestamp.
+        expr: report_time
+        type_params:
+          time_granularity: day
+
+      - name: schema_ver
+        type: categorical
+        description: Schema version.
+        expr: schema_ver
+
+      - name: subscription_id
+        type: categorical
+        description: Subscription identifier.
+        expr: subscription_id
+
+      - name: subscription_ids
+        type: categorical
+        description: Secondary subscription identifier.
+        expr: subscription_ids
+
+    measures:
+      - name: total_devices
+        description: Total number of unique devices.
+        agg: count_distinct
+        expr: device_id
+
+      - name: total_memory_events
+        description: Total number of memory event records.
+        agg: count
+        expr: device_id
+
+      - name: avg_freephysicalmemory
+        description: Average free physical memory.
+        agg: average
+        expr: freephysicalmemory
+
+      - name: avg_visiblememory
+        description: Average visible physical memory.
+        agg: average
+        expr: visiblememory
